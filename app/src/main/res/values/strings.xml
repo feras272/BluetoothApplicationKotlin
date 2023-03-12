@@ -6,4 +6,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="measurement">Measurement</string>
     <string name="scan">Scan</string>
+
+    <string name="firstName">Feras Nasser</string>
+    <string name="secondName">Ahmad Khalid</string>
+    <array name="names">
+        <item>Feras</item>
+        <item>Khalid</item>
+        <item>Ahmad</item>
+    </array>
 </resources>
