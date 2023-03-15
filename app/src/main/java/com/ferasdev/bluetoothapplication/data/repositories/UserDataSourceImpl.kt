@@ -3,7 +3,7 @@ package com.ferasdev.bluetoothapplication.data.repositories
 import com.ferasdev.bluetoothapplication.data.models.User
 
 
-class UserRepositoryImpl: UserRepository {
+class UserDataSourceImpl: UserDataSource {
 //    private val userList:ArrayList<User> = ArrayList()
 //    override fun getUsers(): List<User> {
 //        userList.add(User("Feras",24,80.0,177.65f))
