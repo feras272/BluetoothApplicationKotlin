@@ -9,6 +9,8 @@
 
     <string name="firstName">Feras Nasser</string>
     <string name="secondName">Ahmad Khalid</string>
+    <string name="normal_weight">Normal Weight</string>
+    <string name="adult_users">Adult Users</string>
     <array name="names">
         <item>Feras</item>
         <item>Khalid</item>
