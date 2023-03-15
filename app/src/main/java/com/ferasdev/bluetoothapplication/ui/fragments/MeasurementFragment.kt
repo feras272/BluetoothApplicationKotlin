@@ -12,6 +12,7 @@ import com.ferasdev.bluetoothapplication.R
 import com.ferasdev.bluetoothapplication.databinding.FragmentMeasurementBinding
 import com.ferasdev.bluetoothapplication.ui.adapters.UserAdapter
 import com.ferasdev.bluetoothapplication.viewmodel.MainViewModel
+import com.ferasdev.bluetoothapplication.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 
@@ -47,10 +48,18 @@ class MeasurementFragment : Fragment() {
         }
     }
 
+    fun getNormalWeightUsers() {
+        userViewModel.allUsers.observe(viewLifecycleOwner) {
+            binding.rvUsersFragmentMeasurement.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvUsersFragmentMeasurement.adapter = UserAdapter(it)
+        }
+    }
+
     private lateinit var binding: FragmentMeasurementBinding
 
     //private lateinit var viewModel: MainViewModel
     private val viewModel: MainViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +76,14 @@ class MeasurementFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeUsers()
+
+        binding.btnAdultUsersFragmentMeasurement.setOnClickListener {
+            observeUsers()
+        }
+
+        binding.btnNormalWeightFragmentMeasurement.setOnClickListener {
+            getNormalWeightUsers()
+        }
     }
 
     companion object {
