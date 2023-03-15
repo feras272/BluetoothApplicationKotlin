@@ -2,14 +2,15 @@ package com.ferasdev.bluetoothapplication.di
 
 import android.content.Context
 import com.ferasdev.bluetoothapplication.R
-import com.ferasdev.bluetoothapplication.data.repositories.UserRepository
-import com.ferasdev.bluetoothapplication.data.repositories.UserRepositoryImpl
+import com.ferasdev.bluetoothapplication.data.repositories.UserDataSource
+import com.ferasdev.bluetoothapplication.data.repositories.UserDataSourceImpl
+import com.ferasdev.bluetoothapplication.data.repositories.UserLocalDataSource
+import com.ferasdev.bluetoothapplication.data.repositories.UserLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -40,8 +41,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(): UserRepository = UserRepositoryImpl()
+    fun provideUserRepository(): UserDataSource = UserDataSourceImpl()
 
-
+    @Singleton
+    @Provides
+    fun provideUserLocalDataSource(): UserLocalDataSource = UserLocalDataSourceImpl()
 
 }
