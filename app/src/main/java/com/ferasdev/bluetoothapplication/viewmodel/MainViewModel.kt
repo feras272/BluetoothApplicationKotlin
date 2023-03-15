@@ -1,18 +1,21 @@
 package com.ferasdev.bluetoothapplication.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ferasdev.bluetoothapplication.data.models.User
-import com.ferasdev.bluetoothapplication.data.repositories.UserRepository
-import com.ferasdev.bluetoothapplication.data.repositories.UserRepositoryImpl
+import com.ferasdev.bluetoothapplication.data.repositories.GetAllAdultUsersUseCase
+import com.ferasdev.bluetoothapplication.data.repositories.GetAllNormalWeightUsersUseCase
+import com.ferasdev.bluetoothapplication.data.repositories.UserDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    //private val userDataSource: UserDataSource,
+    private val getAllAdultUsersUseCase: GetAllAdultUsersUseCase,
+    private val getAllNormalWeightUsersUseCase: GetAllNormalWeightUsersUseCase
+    // private val addUserToUserList: AddUserToUserListUseCase()
 ) : ViewModel() {
 
     val TAG = "MainViewModelDaggerHilt"
@@ -24,7 +27,7 @@ class MainViewModel @Inject constructor(
         loadUsers()
     }
 
-    private fun loadUsers() {
-        _allUsers.value = userRepository.getUsers()
+    fun loadUsers() {
+        _allUsers.value = getAllAdultUsersUseCase.getAllAdultUsersUseCase()
     }
 }
