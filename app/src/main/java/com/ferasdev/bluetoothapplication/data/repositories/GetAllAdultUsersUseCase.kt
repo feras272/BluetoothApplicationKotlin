@@ -10,7 +10,7 @@ class GetAllAdultUsersUseCase
 
     private val adultUsersList: ArrayList<User> = ArrayList()
 
-    fun getAllAdultUsersUseCase(): List<User> {
+    suspend fun getAllAdultUsersUseCase(): List<User> {
         for (user in repository.getSavedDataSource().getSavedUsers()) {
             if(user.userAge >= 21) {
                 adultUsersList.add(user)

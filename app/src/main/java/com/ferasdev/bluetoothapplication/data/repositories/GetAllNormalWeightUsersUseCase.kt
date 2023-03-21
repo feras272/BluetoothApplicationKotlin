@@ -10,7 +10,7 @@ class GetAllNormalWeightUsersUseCase
 
     private val normalWeightUsers: ArrayList<User> = ArrayList()
 
-    fun getAllNormalWeightUsersUseCase() : List<User> {
+    suspend fun getAllNormalWeightUsersUseCase() : List<User> {
 
         for (user in repository.getSavedDataSource().getSavedUsers()) {
             if(isNormalWeight(user)) {
