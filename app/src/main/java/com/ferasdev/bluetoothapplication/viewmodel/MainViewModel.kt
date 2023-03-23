@@ -10,6 +10,8 @@ import com.ferasdev.bluetoothapplication.data.repositories.GetAllNormalWeightUse
 import com.ferasdev.bluetoothapplication.data.repositories.UserDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,8 +25,16 @@ class MainViewModel @Inject constructor(
 
     val TAG = "MainViewModelDaggerHilt"
 
-    private val _allUsers = MutableLiveData<List<User>>()
-    val allUsers : LiveData<List<User>> = _allUsers
+    // LiveData
+    //private val _allUsers = MutableLiveData<List<User>>()
+    //val allUsers : LiveData<List<User>> = _allUsers
+
+    // StateFlow
+    val user: User = User("ahmad", 25, 75.5, 182.8f)
+    val listOfUsers = listOf<User>(user)
+    private val _allUsers: MutableStateFlow<List<User>> =
+        MutableStateFlow(listOfUsers) //<List<User>>()
+    val allUsers: StateFlow<List<User>> = _allUsers
 
     init {
         viewModelScope.launch {
@@ -34,6 +44,6 @@ class MainViewModel @Inject constructor(
     }
 
     suspend fun loadUsers() {
-        _allUsers.value = getAllAdultUsersUseCase.getAllAdultUsersUseCase()
+        _allUsers.emit(getAllAdultUsersUseCase.getAllAdultUsersUseCase())
     }
 }
