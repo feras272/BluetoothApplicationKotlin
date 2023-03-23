@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ferasdev.bluetoothapplication.R
 import com.ferasdev.bluetoothapplication.databinding.FragmentMeasurementBinding
@@ -15,6 +16,7 @@ import com.ferasdev.bluetoothapplication.viewmodel.MainViewModel
 import com.ferasdev.bluetoothapplication.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,22 +44,26 @@ class MeasurementFragment : Fragment() {
     }
 
     fun observeUsers() {
-        viewModel.allUsers.observe(viewLifecycleOwner) {
-            binding.rvUsersFragmentMeasurement.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvUsersFragmentMeasurement.adapter = UserAdapter(it)
+        lifecycleScope.launch {
+            viewModel.allUsers.collect {
+                binding.rvUsersFragmentMeasurement.layoutManager = LinearLayoutManager(requireContext())
+                binding.rvUsersFragmentMeasurement.adapter = UserAdapter(it)
+            }
         }
+
     }
 
     fun getNormalWeightUsers() {
-        userViewModel.allUsers.observe(viewLifecycleOwner) {
-            binding.rvUsersFragmentMeasurement.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvUsersFragmentMeasurement.adapter = UserAdapter(it)
+        lifecycleScope.launch {
+            userViewModel.allUsers.collect {
+                binding.rvUsersFragmentMeasurement.layoutManager = LinearLayoutManager(requireContext())
+                binding.rvUsersFragmentMeasurement.adapter = UserAdapter(it)
+            }
         }
     }
 
     private lateinit var binding: FragmentMeasurementBinding
 
-    //private lateinit var viewModel: MainViewModel
     private val viewModel: MainViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
 
@@ -65,13 +71,8 @@ class MeasurementFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentMeasurementBinding.inflate(inflater, container, false)
-
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         return binding.root
-        //return inflater.inflate(R.layout.fragment_measurement, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
